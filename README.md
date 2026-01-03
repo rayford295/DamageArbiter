@@ -30,7 +30,7 @@ The framework integrates:
 
 ### **Figure 1. Study Area**
 <p align="center">
-  <img src="figure/figure1.studyarea map.png" alt="Study Area Map" width="600">
+  <img src="figure/figure1. studyarea map.png" alt="Study Area Map" width="600">
 </p>
 
 ### **Figure 2. Label Example**
@@ -40,22 +40,22 @@ The framework integrates:
 
 ### **Figure 4. Vision Transformer Architecture**
 <p align="center">
-  <img src="figure/figure4.VIT.png" alt="ViT Architecture" width="600">
+  <img src="figure/figure4. VIT.png" alt="ViT Architecture" width="600">
 </p>
 
 ### **Figure 5. CLIP Model**
 <p align="center">
-  <img src="figure/figure5.clip.png" alt="CLIP Model" width="600">
+  <img src="figure/figure5. clip.png" alt="CLIP Model" width="600">
 </p>
 
 ### **Figure 6. Framework of Confidence-Based Error Analysis**
 <p align="center">
-  <img src="figure/figure6.Framework of Confidence-Based Error Analysis.png" alt="Confidence-Based Error Analysis" width="600">
+  <img src="figure/figure6. Framework of Confidence-Based Error Analysis.png" alt="Confidence-Based Error Analysis" width="600">
 </p>
 
 ### **Figure 7. Semantic Detection Pipeline**
 <p align="center">
-  <img src="figure/figure7.Semantic Detection.png" alt="Semantic Detection" width="600">
+  <img src="figure/figure7. Semantic Detection.png" alt="Semantic Detection" width="600">
 </p>
 
 ### **Figure 8. Spatial Mapping Results**
