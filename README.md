@@ -73,6 +73,13 @@ You can access the **street-view disaster dataset** from the following DOI:
 > *Perceiving Multidimensional Disaster Damages from Street–View Images Using Visual–Language Models*  
 > [📁 figshare Dataset DOI: 10.6084/m9.figshare.28801208.v2](https://doi.org/10.6084/m9.figshare.28801208.v2)
 
+or
+
+The primary hosting platform is **Hugging Face Datasets**, which provides a version-controlled repository for convenient access, inspection, and integration with machine learning workflows:
+
+🔗 https://huggingface.co/datasets/Rayford295/BiTemporal-StreetView-Damage
+
+
 The dataset includes:
 - Pre- and post-disaster street-view imagery  
 - Georeferenced location and damage type annotations  
