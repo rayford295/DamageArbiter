@@ -1,7 +1,7 @@
-# 🌪️ DamageArbiter: A Disagreement-driven Arbitration Framework for Hurricane Damage Assessment from Street-View Imagery
+# 🌪️ DamageArbiter: A CLIP-Enhanced Multimodal Arbitration Framework for Hurricane Damage Assessment from Street-View Imagery
 
 This repository contains the implementation, figures, and dataset links for the paper:  
-**“DamageArbiter: A Disagreement-driven Arbitration Framework for Hurricane Damage Assessment from Street-View Imagery.”**
+**“DamageArbiter: A CLIP-Enhanced Multimodal Arbitration Framework for Hurricane Damage Assessment from Street-View Imagery.”**
 
 ---
 
@@ -36,11 +36,6 @@ The framework integrates:
 ### **Figure 2. Label Example**
 <p align="center">
   <img src="figure/figure2.Label-example.png" alt="Label Example" width="600">
-</p>
-
-### **Figure 4. Vision Transformer Architecture**
-<p align="center">
-  <img src="figure/figure4. VIT.png" alt="ViT Architecture" width="600">
 </p>
 
 ### **Figure 5. CLIP Model**
