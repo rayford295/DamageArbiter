@@ -11,7 +11,18 @@ This study proposes a **Disagreement-driven Arbitration Framework** designed to 
 It systematically combines **Vision Transformer (ViT)** and **CLIP (Contrastive Language–Image Pretraining)** representations, supported by **LLM-generated disaster annotations**.
 
 ---
+## 🎥 Demo Video
 
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=MCvd-wD7Fw4">
+    <img src="https://img.youtube.com/vi/MCvd-wD7Fw4/maxresdefault.jpg" width="70%">
+  </a>
+</p>
+
+<p align="center">
+  ▶ Click the image to watch the video demo.
+</p>
+---
 ## 🧩 Methodology Framework
 
 <p align="center">
