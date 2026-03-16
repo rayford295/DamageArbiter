@@ -15,14 +15,16 @@ It systematically combines **Vision Transformer (ViT)** and **CLIP (Contrastive 
 
 <p align="center">
   <a href="https://www.youtube.com/watch?v=MCvd-wD7Fw4">
-    <img src="https://img.youtube.com/vi/MCvd-wD7Fw4/maxresdefault.jpg" width="70%">
+    <img src="https://img.youtube.com/vi/MCvd-wD7Fw4/hqdefault.jpg" alt="DamageArbiter Demo Video" width="85%">
   </a>
 </p>
 
 <p align="center">
-  ▶ Click the image to watch the video demo.
+  Watch the demonstration of <strong>DamageArbiter</strong> on YouTube.
 </p>
+
 ---
+
 ## 🧩 Methodology Framework
 
 <p align="center">
