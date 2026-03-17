@@ -1,1 +1,48 @@
+## 📊 Slides
 
+This folder contains presentation materials related to the paper:
+
+**“DamageArbiter: A CLIP-Enhanced Multimodal Arbitration Framework for Hurricane Damage Assessment from Street-View Imagery.”**
+
+---
+
+### 🎤 Conference Presentation
+
+- **Event:** AAG Annual Meeting 2026  
+- **Session:** GIScience Student Honors Paper Competition (GISS)  
+- **Presenter:** Yifan Yang  
+
+---
+
+### 📂 Available Files
+
+- `2026_Yifan Yang_AAG_GISS.pptx`  
+  → Final presentation slides  
+
+- `2026_Yifan Yang_AAG_GISS (1).pptx`  
+  → Backup / alternative version  
+
+---
+
+### 📄 Additional Material
+
+- `DamageArbiter.pdf`  
+  → Paper draft or extended abstract  
+
+---
+
+### 📌 Notes
+
+- The slides summarize the **core idea, methodology, and experimental results** of the proposed framework.  
+- For full technical details, please refer to the main paper and repository documentation.  
+
+---
+
+### 🔗 Related Links
+
+- Main repository: https://github.com/rayford295/DamageArbiter  
+- Author: Yifan Yang  
+
+---
+
+> If you find this work useful, feel free to ⭐ the repository or cite our work.
