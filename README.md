@@ -100,6 +100,26 @@ This work has been **accepted for presentation** at the **2026 Annual Meeting of
 - **Location:** Imperial B, Ballroom Level, Hilton Union Square  
 
 ---
+## 📄 Preprint (arXiv)
+
+Yang, Y., Zou, L., Gong, W., Fu, K., Li, Z., Wang, S., ... Tian, H. (2026).  
+*DamageArbiter: A CLIP-Enhanced Multimodal Arbitration Framework for Hurricane Damage Assessment from Street-View Imagery.*  
+**arXiv preprint arXiv:2603.14837**  
+🔗 https://arxiv.org/abs/2603.14837
+
+## 📌 Citation
+
+If you find this work useful, please consider citing:
+
+```bibtex
+@article{yang2026damagearbiter,
+  title={DamageArbiter: A CLIP-Enhanced Multimodal Arbitration Framework for Hurricane Damage Assessment from Street-View Imagery},
+  author={Yang, Yifan and Zou, Lei and Gong, Wenjing and Fu, Kai and Li, Zhen and Wang, Shuo and others and Tian, H.},
+  journal={arXiv preprint arXiv:2603.14837},
+  year={2026}
+}
+
+---
 ## ⚠️ Usage and Permissions
 
 All **codes, figures, and datasets** in this repository were developed and curated **solely for academic research purposes** as part of  
