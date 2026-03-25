@@ -88,7 +88,7 @@ The dataset includes:
 ---
 ## 🏛️ Conference Presentation (AAG 2026)
 
-This work has been **accepted for presentation** at the **2026 Annual Meeting of the American Association of Geographers (AAG 2026)**.
+This work has been **accepted for presentation** at the **2026 Annual Meeting of the American Association of Geographers (AAG 2026)** and received the **🥈2nd Place Award in the AAG GIS Specialty Group Student Honors Paper Competition**.
 
 - **Session:** AAG GIS Specialty Group — **Honors Competition for Student Papers**  
 - **Presentation Type:** Gallery Presentation (**Student Honors Competition**)  
@@ -97,7 +97,7 @@ This work has been **accepted for presentation** at the **2026 Annual Meeting of
 **Presentation Schedule:**
 - **Date:** Tuesday, March 17, 2026  
 - **Time:** 4:10 PM – 5:30 PM  
-- **Location:** Imperial B, Ballroom Level, Hilton Union Square  
+- **Location:** Imperial B, Ballroom Level, Hilton Union Square
 
 ---
 ## 📄 Preprint (arXiv)
