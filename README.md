@@ -38,7 +38,28 @@ DamageArbiter introduces a **disagreement-driven arbitration framework** for str
 |:---:|:---:|
 | <img src="figure/figure5. clip.png" width="320"> | <img src="figure/figure8.mapping.png" width="320"> |
 
+| Semantic Probe Severity Maps |
+|:---:|
+| <img src="figure/figure11.semantic_probe_severity_maps.png" width="640"> |
+
+The semantic probe severity maps show image-level damage severity (*mild / moderate / severe*) within locations where each disaster semantic probe is strongly expressed: flood, tree, debris, and infrastructure.
+
 ---
+
+## Semantic Probe Mapping
+
+The Figure 11 map can be regenerated from aligned CLIP-Human and CLIP-LLM semantic score CSVs:
+
+```bash
+python code/semantic-probe/plot_probe_severity_maps.py \
+  --human-csv path/to/human_semantic_geo_scores.csv \
+  --llm-csv path/to/gpt_semantic_geo_scores.csv \
+  --output figure/figure11.semantic_probe_severity_maps.png
+```
+
+Requires `pandas`, `numpy`, and `matplotlib`.
+
+Required columns are `path`, `lat`, `lon`, `true`, `sim_flood`, `sim_tree`, `sim_debris`, and `sim_infra`.
 
 ## Dataset
 
