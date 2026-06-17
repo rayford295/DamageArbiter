@@ -195,7 +195,13 @@ def run_cross_validation(df, folds=3, epochs=8, bsz=32, lr=1e-4):
                     oof_rows.append({
                         "fold": k + 1, "path": paths[i], "true": class_names[y[i]], "pred": class_names[preds[i]],
                         "p_true": float(probs[i, y[i]]), "p_pred": float(probs[i, preds[i]]),
-                        "confidence": float(probs[i, preds[i]]) - float(probs[i, y[i]]),
+                        # Label-free max-softmax confidence (probability of the predicted class).
+                        # Computable at inference without ground truth -> safe as an arbitration feature.
+                        "confidence": float(probs[i, preds[i]]),
+                        # Diagnostic ONLY: p_pred - p_true requires the ground-truth label and must
+                        # never be used as an arbitration feature (it leaks the label). Used solely for
+                        # the overconfident/ambiguous error analysis below.
+                        "error_margin": float(probs[i, preds[i]]) - float(probs[i, y[i]]),
                         "entropy": float(entropy(probs[i], base=2)), "is_correct": int(y[i] == preds[i]),
                     })
         del model; gc.collect(); torch.cuda.empty_cache()
@@ -206,8 +212,8 @@ def run_cross_validation(df, folds=3, epochs=8, bsz=32, lr=1e-4):
 
     mis = oof[oof["is_correct"] == 0].copy()
     overconf_th, ambiguous_th = 0.40, 0.10
-    mis["error_type"] = np.where(mis["confidence"] >= overconf_th, "overconfident",
-                                 np.where(mis["confidence"] <= ambiguous_th, "ambiguous", "medium"))
+    mis["error_type"] = np.where(mis["error_margin"] >= overconf_th, "overconfident",
+                                 np.where(mis["error_margin"] <= ambiguous_th, "ambiguous", "medium"))
     mis.to_csv("/content/oof_vitb16_miscls.csv", index=False)
     print("[Report] Saved misclassification analysis to /content/oof_vitb16_miscls.csv")
     print("\n[Report] Misclassification Type Distribution:")

@@ -251,7 +251,13 @@ def evaluate(model, test_ds, cfg, save_dir, tag, fold_idx, class_names):
                     "true": class_names[ti], "pred": class_names[pi],
                     "probs_0": float(pvec[0]), "probs_1": float(pvec[1]), "probs_2": float(pvec[2]),
                     "p_true": float(pvec[ti]), "p_pred": float(pvec[pi]),
-                    "confidence": float(pvec[pi] - pvec[ti]),
+                    # Label-free max-softmax confidence (probability of the predicted class);
+                    # computable at inference without ground truth -> safe as an arbitration feature.
+                    "confidence": float(pvec[pi]),
+                    # Diagnostic ONLY: p_pred - p_true requires the ground-truth label and must never
+                    # be used as an arbitration feature (it leaks the label). Used solely for the
+                    # overconfident/ambiguous error analysis below.
+                    "error_margin": float(pvec[pi] - pvec[ti]),
                     "entropy": float(entropy(pvec, base=2)),
                     "is_correct": int(ti == pi),
                 })
@@ -277,8 +283,8 @@ def evaluate(model, test_ds, cfg, save_dir, tag, fold_idx, class_names):
     mis = oof_df[oof_df["is_correct"]==0].copy()
     overconf_th, ambiguous_th = 0.40, 0.10
     mis["error_type"] = np.where(
-        mis["confidence"]>=overconf_th, "overconfident",
-        np.where(mis["confidence"]<=ambiguous_th, "ambiguous", "medium")
+        mis["error_margin"]>=overconf_th, "overconfident",
+        np.where(mis["error_margin"]<=ambiguous_th, "ambiguous", "medium")
     )
     mis_path = os.path.join(save_dir, f"oof_{tag.lower()}_fold{fold_idx}_misclassified.csv")
     mis.to_csv(mis_path, index=False)
