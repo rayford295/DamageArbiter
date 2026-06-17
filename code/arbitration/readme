@@ -1,0 +1,33 @@
+DamageArbiter — disagreement-driven arbitration (label-free)
+
+damage_arbiter.py implements the arbitration stage of DamageArbiter. It reads the
+out-of-fold (OOF) predictions of the fine-tuned ViT and CLIP base models and:
+
+  - uses the shared prediction when ViT and CLIP agree;
+  - when they disagree, trains a lightweight logistic-regression arbitrator to
+    decide which model to trust.
+
+No ground-truth leakage. All arbitration features are computed only from the base
+models' softmax outputs and are therefore available at inference on new, unlabeled
+imagery:
+  * confidence  — max-softmax probability (probability of the predicted class)
+  * entropy     — Shannon entropy of the softmax distribution
+  * margin      — decision margin (top-1 minus top-2 probability)
+  * class-prob  — full softmax vector (CLIP)
+  * probe       — optional CLIP semantic-probe cosine scores
+The label-dependent quantity p_pred - p_true (saved as `error_margin` by the
+base-model scripts) is used only for the overconfident/ambiguous error diagnosis,
+never as an arbitration feature. The decision threshold is fixed at tau = 0.5.
+
+Run:
+  python damage_arbiter.py \
+      --vit-oof   oof_vitb32_all.csv \
+      --clip-oof  oof_clip_gpt_all.csv \
+      --probe-csv gpt_semantic_geo_scores.csv     # optional
+
+The script prints the feature ablation (all configurations are comparable) and the
+final confidence-configuration metrics, and writes per-sample DamageArbiter
+predictions to a CSV. The confidence configuration is selected for parsimony and
+deployability.
+
+Requires: pandas, numpy, scikit-learn.
