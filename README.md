@@ -82,12 +82,10 @@ Session: Imperial B, Ballroom Level, Hilton Union Square — March 17, 2026, 4:1
 
 ```bibtex
 @article{yang2026damagearbiter,
-  title   = {DamageArbiter: A CLIP-Enhanced Multimodal Arbitration Framework
-             for Hurricane Damage Assessment from Street-View Imagery},
-  author  = {Yang, Yifan and Zou, Lei and Gong, Wenjing and Fu, Kai and
-             Li, Zhen and Wang, Shuo and others and Tian, H.},
-  journal = {arXiv preprint arXiv:2603.14837},
-  year    = {2026}
+  title={DamageArbiter: A CLIP-Enhanced Multimodal Arbitration Framework for Hurricane Damage Assessment from Street-View Imagery},
+  author={Yang, Yifan and Zou, Lei and Gong, Wenjing and Fu, Kani and Li, Zongrong and Wang, Siqin and Zhou, Bing and Cai, Heng and Tian, Hao},
+  journal={arXiv preprint arXiv:2603.14837},
+  year={2026}
 }
 ```
 
