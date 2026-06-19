@@ -10,7 +10,7 @@
 
 ## Overview
 
-DamageArbiter introduces a **disagreement-driven arbitration framework** for street-view-based disaster damage assessment. The framework combines **Vision Transformer (ViT)** and **CLIP** representations with **LLM-generated textual annotations**, using confidence-based arbitration to resolve cross-modal disagreements and produce interpretable damage predictions.
+DamageArbiter is a **disagreement-driven arbitration framework** for street-view-based disaster damage assessment. It combines a **Vision Transformer (ViT)** image model with a **CLIP** image-text model through a lightweight logistic-regression meta-classifier that arbitrates the cases where the two models disagree, and then applies **post-hoc confidence calibration** (temperature scaling) to correct overconfidence. On 2,556 post-disaster street-view images from Hurricane Milton, DamageArbiter improves accuracy to **75.85%** and the Matthews correlation coefficient (MCC) to **0.619** using only inference-time features, and calibration reduces the image model's overconfident errors from over 70% to about 51% without changing accuracy.
 
 <p align="center">
   <img src="figure/figure3.Methodology framework.png" width="700">
@@ -34,32 +34,24 @@ DamageArbiter introduces a **disagreement-driven arbitration framework** for str
 |:---:|:---:|
 | <img src="figure/figure1. studyarea map.png" width="320"> | <img src="figure/figure2.Label-example.png" width="320"> |
 
-| CLIP Architecture | Spatial Mapping Results |
+| DamageArbiter vs. Best Baseline | Confidence Calibration |
 |:---:|:---:|
-| <img src="figure/figure5. clip.png" width="320"> | <img src="figure/figure8.mapping.png" width="320"> |
+| <img src="figure/figure9.damagearbiter_vs_baseline.png" width="320"> | <img src="figure/figure10.confidence_calibration.png" width="320"> |
 
-| Semantic Probe Severity Maps |
+| Spatial Deployment in Horseshoe Beach |
 |:---:|
-| <img src="figure/figure11.semantic_probe_severity_maps.png" width="640"> |
+| <img src="figure/figure11.spatial_deployment.png" width="720"> |
 
-The semantic probe severity maps show image-level damage severity (*mild / moderate / severe*) within locations where each disaster semantic probe is strongly expressed: flood, tree, debris, and infrastructure.
+The spatial-deployment figure shows, for every street-view location, the ground-truth severity, the DamageArbiter-predicted severity, where the arbitrator trusted ViT versus CLIP, and the misclassified locations with overconfident errors highlighted.
 
 ---
 
-## Semantic Probe Mapping
+## Code
 
-The Figure 11 map can be regenerated from aligned CLIP-Human and CLIP-LLM semantic score CSVs:
-
-```bash
-python code/semantic-probe/plot_probe_severity_maps.py \
-  --human-csv path/to/human_semantic_geo_scores.csv \
-  --llm-csv path/to/gpt_semantic_geo_scores.csv \
-  --output figure/figure11.semantic_probe_severity_maps.png
-```
-
-Requires `pandas`, `numpy`, and `matplotlib`.
-
-Required columns are `path`, `lat`, `lon`, `true`, `sim_flood`, `sim_tree`, `sim_debris`, and `sim_infra`.
+- `code/ViT-B16.py` and `code/clip-enhance/`: image-only, text-only, and multimodal CLIP baselines.
+- `code/arbitration/damage_arbiter.py`: the disagreement-driven, label-free arbitrator.
+- `code/LLM-label/`: GPT and Gemini caption generation.
+- `code/calibration/temperature_scaling.py`: post-hoc confidence calibration (temperature scaling) used to correct overconfidence.
 
 ## Dataset
 

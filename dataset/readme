@@ -3,7 +3,3 @@ DamageArbiter dataset files
 - `post_image_gemini_labels.csv`: post-disaster image captions generated with Gemini.
 - `post_image_gpt_labels.csv`: post-disaster image captions generated with GPT.
 - `post_image_human&gpt-4o-mini.xlsx`: human and GPT-4o-mini annotation table.
-- `prompts_debris.json`: semantic probe prompts for debris-related damage cues.
-- `prompts_flood.json`: semantic probe prompts for flood-related damage cues.
-- `prompts_infra.json`: semantic probe prompts for infrastructure-related damage cues.
-- `prompts_tree.json`: semantic probe prompts for tree-related damage cues.
