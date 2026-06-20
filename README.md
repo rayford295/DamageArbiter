@@ -18,16 +18,6 @@ DamageArbiter is a **disagreement-driven arbitration framework** for street-view
 
 ---
 
-## Demo
-
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=MCvd-wD7Fw4">
-    <img src="https://img.youtube.com/vi/MCvd-wD7Fw4/hqdefault.jpg" width="75%">
-  </a>
-</p>
-
----
-
 ## Figures
 
 | Study Area | Label Example |
