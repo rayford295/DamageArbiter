@@ -10,7 +10,7 @@
 
 ## Overview
 
-DamageArbiter is a **disagreement-driven arbitration framework** for street-view-based disaster damage assessment. It combines a **Vision Transformer (ViT)** image model with a **CLIP** image-text model through a lightweight logistic-regression meta-classifier that arbitrates the cases where the two models disagree. When the two models agree, DamageArbiter adopts **CLIP's more conservative confidence**, so the arbitrated predictions inherit a more reliable confidence profile. On 2,556 post-disaster street-view images from Hurricane Milton, DamageArbiter improves accuracy to **75.85%** and the Matthews correlation coefficient (MCC) to **0.619** using only inference-time features, while reducing the share of overconfident errors from **70.58%** (image-only baseline) to **16.5%** without changing accuracy.
+DamageArbiter is a **disagreement-driven arbitration framework** for street-view-based disaster damage assessment. It combines a **Vision Transformer (ViT)** image model with a **CLIP** image-text model through a lightweight logistic-regression meta-classifier that arbitrates the cases where the two models disagree. When the two models agree, DamageArbiter adopts **CLIP's more conservative confidence**, so the arbitrated predictions inherit a more reliable confidence profile. On 2,556 post-disaster street-view images from Hurricane Milton, DamageArbiter improves accuracy to **75.85%** and the Matthews correlation coefficient (MCC) to **0.619** using only inference-time features, while reducing the share of overconfident errors from **70.58%** (image-only baseline) to **16.45%** without changing accuracy.
 
 <p align="center">
   <img src="figure/figure3.Methodology framework.png" width="700">
@@ -34,9 +34,9 @@ DamageArbiter is a **disagreement-driven arbitration framework** for street-view
 |:---:|:---:|
 | <img src="figure/figure1. studyarea map.png" width="320"> | <img src="figure/figure2.Label-example.png" width="320"> |
 
-| DamageArbiter vs. Best Baseline | Accuracy vs. Overconfidence |
-|:---:|:---:|
-| <img src="figure/figure9.damagearbiter_vs_baseline.png" width="320"> | <img src="figure/figure10.accuracy_overconfidence.png" width="320"> |
+| ViT, CLIP, and DamageArbiter across five metrics and three error types |
+|:---:|
+| <img src="figure/figure9.merged_metrics_overconfidence.png" width="780"> |
 
 | Spatial Deployment in Horseshoe Beach |
 |:---:|
