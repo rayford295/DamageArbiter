@@ -1,5 +1,10 @@
 """
-Post-hoc confidence calibration via temperature scaling (Section 4.3.4).
+Post-hoc confidence calibration via temperature scaling.
+
+This optional diagnostic utility is not part of the final DamageArbiter
+arbitration model reported in the manuscript. It can be used to inspect whether
+temperature scaling changes confidence calibration and overconfident-error rates
+for a saved OOF prediction file.
 
 Temperature scaling rescales a model's logits by a single scalar T before the
 softmax:  p_i = softmax(z_i / T).  Because dividing all logits by the same T

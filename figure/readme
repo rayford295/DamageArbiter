@@ -1,1 +1,15 @@
+Manuscript figures
 
+The files in this folder are synchronized with the current DamageArbiter
+manuscript:
+
+- `fig01_damage_mapping.png`: Hurricane Milton damage mapping and street-view sample distribution.
+- `fig02_caption_examples.png`: human- and LLM-generated description examples.
+- `fig03_framework.png`: image-only, text-only, CLIP, and DamageArbiter framework.
+- `fig04_vit_architecture.png`: image-only ViT baseline architecture.
+- `fig05_text_encoder.png`: text-only CLIP encoder architecture.
+- `fig06_clip_contrastive.png`: CLIP-based contrastive learning setup.
+- `fig07_damagearbiter.png`: logistic-regression DamageArbiter design.
+- `fig08_confidence_error_analysis.png`: confidence-based error analysis framework.
+- `fig09_model_comparison.png`: ViT-B/32, CLIP-LLM, and DamageArbiter performance and reliability comparison.
+- `fig10_spatial_deployment.png`: spatial deployment in Horseshoe Beach, Florida.

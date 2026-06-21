@@ -1,1 +1,13 @@
+CLIP-enhanced multimodal baselines
 
+This folder contains scripts for the CLIP-related parts of the manuscript:
+
+- `clipscore.py` computes image-text semantic alignment scores for generated
+  or human-written captions.
+- `clip_human_gpt4omini.py` fine-tunes CLIP-based image-text classifiers with
+  GPT-4o-mini or human descriptions using the manuscript's contrastive +
+  classification objective, then exports OOF predictions for comparison with
+  the image-only ViT baseline and DamageArbiter.
+
+The manuscript compares CLIP-LLM and CLIP-Human settings, then uses the CLIP-LLM
+OOF predictions as one input to the final arbitration stage.

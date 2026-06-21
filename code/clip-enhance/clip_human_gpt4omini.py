@@ -150,7 +150,7 @@ def calculate_clip_scores(clip_model, processor, dataset, text_cols_to_score, ba
     print("CLIPScore Done:", {k: round(v,4) for k,v in avg_scores.items()})
     return avg_scores
 
-# 8) CLIP Classification Head (ViT-B/16) -- Average of text and image features followed by a linear layer
+# 8) CLIP multimodal classifier with contrastive + classification objectives
 class CLIPClassifier(nn.Module):
     def __init__(self, clip_model_name="openai/clip-vit-base-patch16", num_classes=3):
         super().__init__()
@@ -166,7 +166,14 @@ class CLIPClassifier(nn.Module):
         txt_feat = txt_feat / txt_feat.norm(dim=-1, keepdim=True)
         fused = (img_feat + txt_feat) / 2.0
         logits = self.fc(fused)
-        return logits
+        return logits, img_feat, txt_feat
+
+
+def image_to_text_contrastive_loss(img_feat, txt_feat, logit_scale):
+    """Single-directional InfoNCE loss, with each image matched to its own text."""
+    logits_per_image = logit_scale.exp() * img_feat @ txt_feat.T
+    targets = torch.arange(logits_per_image.size(0), device=logits_per_image.device)
+    return F.cross_entropy(logits_per_image, targets)
 
 # 9) Training and Evaluation (Evaluation writes OOF & MIS)
 def train_one_fold(train_ds, cfg, save_path):
@@ -194,8 +201,15 @@ def train_one_fold(train_ds, cfg, save_path):
                 labels    = batch["label"].to(device)
 
                 opt.zero_grad()
-                logits = model(pixel_values=pixel_values, input_ids=input_ids, attention_mask=attn_mask)
-                loss   = crit(logits, labels)
+                logits, img_feat, txt_feat = model(
+                    pixel_values=pixel_values,
+                    input_ids=input_ids,
+                    attention_mask=attn_mask,
+                )
+                cls_loss = crit(logits, labels)
+                contrast_loss = image_to_text_contrastive_loss(img_feat, txt_feat, model.clip.logit_scale)
+                lam = cfg.get("lambda_contrast", 0.5)
+                loss = lam * contrast_loss + (1.0 - lam) * cls_loss
                 loss.backward()
                 opt.step(); scheduler.step()
 
@@ -236,7 +250,7 @@ def evaluate(model, test_ds, cfg, save_dir, tag, fold_idx, class_names):
             labels = batch["label"].numpy()
             paths  = batch["path"]
 
-            logits = model(pixel_values=pixel_values, input_ids=input_ids, attention_mask=attn_mask)
+            logits, _, _ = model(pixel_values=pixel_values, input_ids=input_ids, attention_mask=attn_mask)
             probs  = F.softmax(logits, dim=1).cpu().numpy()
             preds  = probs.argmax(1)
 
@@ -307,7 +321,8 @@ cfg = {
     "folds": 3,
     "seed": 42,
     "num_classes": 3,
-    "weight_decay": 0.0
+    "weight_decay": 0.0,
+    "lambda_contrast": 0.5
 }
 
 # 11) Calculate CLIPScore first (Optional)

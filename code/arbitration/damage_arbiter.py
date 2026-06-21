@@ -1,22 +1,20 @@
 """
-DamageArbiter — disagreement-driven arbitration (label-free / deployable).
+DamageArbiter — disagreement-driven arbitration.
 
-Given the out-of-fold (OOF) predictions of the fine-tuned ViT and CLIP base
-models, this script:
+Given the out-of-fold (OOF) predictions of the ViT-B/32 image-only baseline and
+the CLIP-LLM multimodal baseline, this script:
 
   1. uses the shared prediction when ViT and CLIP agree;
   2. when they disagree, trains a lightweight logistic-regression arbitrator to
      decide which model to trust.
 
-IMPORTANT — no ground-truth leakage. Every arbitration feature is computed
-*solely from the base models' softmax outputs* and is therefore available at
-inference on new, unlabeled imagery:
+IMPORTANT — no ground-truth leakage. Every final arbitration feature is computed
+from the base models' softmax outputs and is therefore available at inference on
+new, unlabeled imagery:
 
     * confidence : max-softmax probability (probability of the predicted class)
     * entropy    : Shannon entropy of the softmax distribution
     * margin     : decision margin = top-1 minus top-2 probability
-    * class-prob : the full softmax vector (CLIP)
-    * probe      : (optional) CLIP semantic-probe cosine scores
 
 The quantity p_pred - p_true (saved as `error_margin` by the base-model scripts)
 is NOT used here: it depends on the ground-truth label and is only a diagnostic
@@ -27,8 +25,7 @@ feature computation is applied to new images, so no label is ever required.
 Usage:
     python damage_arbiter.py \
         --vit-oof   oof_vitb32_all.csv \
-        --clip-oof  oof_clip_gpt_all.csv \
-        --probe-csv gpt_semantic_geo_scores.csv   # optional
+        --clip-oof  oof_clip_gpt_all.csv
 """
 
 import argparse
@@ -87,8 +84,6 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--vit-oof", required=True)
     ap.add_argument("--clip-oof", required=True)
-    ap.add_argument("--probe-csv", default=None,
-                    help="optional CSV with path, sim_flood, sim_tree, sim_debris, sim_infra")
     ap.add_argument("--out", default="damagearbiter_predictions.csv")
     args = ap.parse_args()
 
@@ -124,20 +119,13 @@ def main():
     unc = np.column_stack([arb["entropy_vit"], arb["margin"],
                            arb["entropy_clip"], clip_margin])
     feats = {
-        "Confidence": conf,
-        "Confidence + Uncertainty": np.column_stack([conf, unc]),
-        "Confidence + Uncertainty + Class-prob": np.column_stack([conf, unc, clip_probs]),
+        "LOGREG_conf": conf,
+        "LOGREG_conf+unc": np.column_stack([conf, unc]),
     }
-    if args.probe_csv:
-        probe = pd.read_csv(args.probe_csv)[["path", "sim_flood", "sim_tree", "sim_debris", "sim_infra"]]
-        arb_p = arb.merge(probe, on="path", how="left")
-        S = arb_p[["sim_flood", "sim_tree", "sim_debris", "sim_infra"]].values
-        feats["All + Semantic probes"] = np.column_stack([conf, unc, clip_probs, S])
-        feats["Semantic probes only"] = S
 
     # ---- ablation: each configuration, OOF, fixed tau, averaged over seeds ----
     print(f"\nAblation (fixed tau={TAU}, {N_SEEDS}-seed mean):")
-    print(f"{'Configuration':<42}{'ArbAcc':>8}{'OverallAcc':>12}{'MCC':>8}")
+    print(f"{'Configuration':<20}{'ArbAcc':>8}{'OverallAcc':>12}{'MCC':>8}")
     for name, X in feats.items():
         aa, oa, mc = [], [], []
         for s in range(N_SEEDS):
@@ -150,14 +138,19 @@ def main():
             aa.append((trust == y).mean())
             oa.append((fp == true).mean())
             mc.append(matthews_corrcoef(true, fp))
-        print(f"{name:<42}{np.mean(aa):>8.3f}{np.mean(oa):>12.4f}{np.mean(mc):>8.4f}")
+        print(f"{name:<20}{np.mean(aa):>8.3f}{np.mean(oa):>12.4f}{np.mean(mc):>8.4f}")
+
+    naive_trust = (arb["confidence_vit"].values > arb["confidence_clip"].values).astype(int)
+    naive_pred = final_predictions(naive_trust)
+    print(f"{'Naive heuristic':<20}{(naive_trust == y).mean():>8.3f}"
+          f"{(naive_pred == true).mean():>12.4f}{matthews_corrcoef(true, naive_pred):>8.4f}")
 
     # ---- final arbitrator: confidence only (parsimonious, fully deployable) ----
     # The confidence configuration is selected for parsimony and deployability: all
     # learned configurations perform comparably (see ablation above), so the simplest
     # label-free feature set is preferred. Metrics are averaged over seeds for stability;
     # the saved prediction CSV uses the first seed.
-    X = feats["Confidence"]
+    X = feats["LOGREG_conf"]
     acc, rec, pre, swf, mcc = [], [], [], [], []
     pred0 = None
     for s in range(N_SEEDS):
