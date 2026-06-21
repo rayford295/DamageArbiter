@@ -1,5 +1,10 @@
 DamageArbiter dataset files
 
+The manuscript uses the Milton-SV post-disaster street-view subset: 2,556 images
+from Horseshoe Beach, Florida after Hurricane Milton, labeled as mild, moderate,
+or severe damage. The labels and captions in this folder support the human- and
+LLM-description experiments.
+
 - `post_image_gemini_labels.csv`: post-disaster image captions generated with Gemini.
 - `post_image_gpt_labels.csv`: post-disaster image captions generated with GPT.
 - `post_image_human&gpt-4o-mini.xlsx`: human and GPT-4o-mini annotation table.

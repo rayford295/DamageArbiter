@@ -1,1 +1,16 @@
+DamageArbiter code
 
+This folder contains the scripts used to reproduce the manuscript experiments:
+
+- `vit_baseline_oof.py`: image-only ViT baseline template. It defaults to
+  ViT-B/32, the strongest image-only baseline used in the final DamageArbiter
+  comparison. Set `VIT_MODEL_NAME=vit_base_patch16_224` to run ViT-B/16.
+- `clip-enhance/`: CLIPScore and CLIP-based multimodal baseline scripts using
+  human or LLM-generated descriptions.
+- `arbitration/damage_arbiter.py`: disagreement-driven logistic-regression
+  arbitrator used for the final DamageArbiter evaluation.
+- `LLM-label/`: GPT and Gemini image-description generation scripts.
+- `calibration/`: optional confidence-calibration utilities for diagnostics.
+
+Most scripts were written for a Colab-style workflow and contain editable data
+paths near the top of each file.

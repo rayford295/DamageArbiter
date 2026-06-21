@@ -1,19 +1,23 @@
 # DamageArbiter
 
-**A CLIP-Enhanced Multimodal Arbitration Framework for Hurricane Damage Assessment from Street-View Imagery**
+**A Multimodal Arbitration Framework for Disaster Damage Assessment from Street-View Imagery**
 
 [![arXiv](https://img.shields.io/badge/arXiv-2603.14837-b31b1b.svg)](https://arxiv.org/abs/2603.14837)
 [![Dataset](https://img.shields.io/badge/Dataset-Figshare-blue)](https://doi.org/10.6084/m9.figshare.28801208.v2)
 [![HuggingFace](https://img.shields.io/badge/HuggingFace-Dataset-yellow)](https://huggingface.co/datasets/Rayford295/BiTemporal-StreetView-Damage)
 
+[Latest manuscript PDF](DamageArbiter.pdf)
+
 ---
 
 ## Overview
 
-DamageArbiter is a **disagreement-driven arbitration framework** for street-view-based disaster damage assessment. It combines a **Vision Transformer (ViT)** image model with a **CLIP** image-text model through a lightweight logistic-regression meta-classifier that arbitrates the cases where the two models disagree. When the two models agree, DamageArbiter adopts **CLIP's more conservative confidence**, so the arbitrated predictions inherit a more reliable confidence profile. On 2,556 post-disaster street-view images from Hurricane Milton, DamageArbiter improves accuracy to **75.85%** and the Matthews correlation coefficient (MCC) to **0.619** using only inference-time features, while reducing the share of overconfident errors from **70.58%** (image-only baseline) to **16.45%** without changing accuracy.
+DamageArbiter is a **multimodal disagreement-driven arbitration framework** for street-view-based disaster damage assessment. It compares image-only, text-only, and CLIP-based multimodal baselines, then uses a lightweight logistic-regression arbitrator to resolve cases where the strongest image-only model and the CLIP-LLM model disagree.
+
+The study uses **2,556 post-disaster street-view images** collected after Hurricane Milton in Horseshoe Beach, Florida. Each image is paired with human-written and LLM-generated disaster descriptions. DamageArbiter improves accuracy to **75.85%** and the Matthews correlation coefficient (MCC) to **0.6188**, compared with the best image-only baseline at **74.33%** accuracy and **0.5947** MCC. It also reduces overconfident errors from **70.58%** for the image-only ViT-B/32 baseline to **16.45%**, showing why reliability metrics should be reported alongside accuracy in disaster damage classification.
 
 <p align="center">
-  <img src="figure/figure3.Methodology framework.png" width="700">
+  <img src="figure/fig03_framework.png" width="700">
 </p>
 
 ---
@@ -22,15 +26,15 @@ DamageArbiter is a **disagreement-driven arbitration framework** for street-view
 
 | Study Area | Label Example |
 |:---:|:---:|
-| <img src="figure/figure1. studyarea map.png" width="320"> | <img src="figure/figure2.Label-example.png" width="320"> |
+| <img src="figure/fig01_damage_mapping.png" width="320"> | <img src="figure/fig02_caption_examples.png" width="320"> |
 
-| ViT, CLIP, and DamageArbiter across five metrics and three error types |
+| ViT-B/32, CLIP-LLM, and DamageArbiter across performance and reliability metrics |
 |:---:|
-| <img src="figure/figure9.merged_metrics_overconfidence.png" width="780"> |
+| <img src="figure/fig09_model_comparison.png" width="780"> |
 
 | Spatial Deployment in Horseshoe Beach |
 |:---:|
-| <img src="figure/figure11.spatial_deployment.png" width="720"> |
+| <img src="figure/fig10_spatial_deployment.png" width="720"> |
 
 The spatial-deployment figure shows, for every street-view location, the ground-truth severity, the DamageArbiter-predicted severity, where the arbitrator trusted ViT versus CLIP, and the misclassified locations with overconfident errors highlighted.
 
@@ -38,14 +42,14 @@ The spatial-deployment figure shows, for every street-view location, the ground-
 
 ## Code
 
-- `code/ViT-B16.py` and `code/clip-enhance/`: image-only, text-only, and multimodal CLIP baselines.
-- `code/arbitration/damage_arbiter.py`: the disagreement-driven, label-free arbitrator.
+- `code/vit_baseline_oof.py` and `code/clip-enhance/`: image-only ViT and CLIP-based multimodal baselines.
+- `code/arbitration/damage_arbiter.py`: the disagreement-driven arbitrator used for the final DamageArbiter evaluation.
 - `code/LLM-label/`: GPT and Gemini caption generation.
-- `code/calibration/temperature_scaling.py`: optional post-hoc confidence calibration (temperature scaling) utility.
+- `code/calibration/temperature_scaling.py`: optional confidence-calibration utility for additional diagnostics.
 
 ## Dataset
 
-Pre- and post-disaster street-view imagery collected from **Horseshoe Beach, Florida** following **Hurricane Milton**, with georeferenced annotations and damage severity labels (*mild / moderate / severe*).
+The experiments use the Milton-SV post-disaster street-view subset collected from **Horseshoe Beach, Florida** after **Hurricane Milton**, with damage severity labels (*mild / moderate / severe*) and human- or LLM-generated descriptions.
 
 - **Figshare:** [10.6084/m9.figshare.28801208.v2](https://doi.org/10.6084/m9.figshare.28801208.v2)
 - **Hugging Face:** [Rayford295/BiTemporal-StreetView-Damage](https://huggingface.co/datasets/Rayford295/BiTemporal-StreetView-Damage)
@@ -64,7 +68,7 @@ Session: Imperial B, Ballroom Level, Hilton Union Square — March 17, 2026, 4:1
 
 ```bibtex
 @article{yang2026damagearbiter,
-  title={DamageArbiter: A CLIP-Enhanced Multimodal Arbitration Framework for Hurricane Damage Assessment from Street-View Imagery},
+  title={DamageArbiter: A Multimodal Arbitration Framework for Disaster Damage Assessment from Street-View Imagery},
   author={Yang, Yifan and Zou, Lei and Gong, Wenjing and Fu, Kani and Li, Zongrong and Wang, Siqin and Zhou, Bing and Cai, Heng and Tian, Hao},
   journal={arXiv preprint arXiv:2603.14837},
   year={2026}
